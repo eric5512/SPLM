@@ -9,4 +9,5 @@ protected:
 public:
     Command(const std::vector<std::string>& mod) : modifiers(mod) {};
     virtual void execute() = 0;
+    virtual std::string usage() = 0;
 };
