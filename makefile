@@ -1,6 +1,6 @@
 COMMANDS = src/commands/init.cpp
 
-INCLUDES = src/help.cpp src/command_builder.cpp $(COMMANDS)
+INCLUDES = src/help.cpp src/command_builder.cpp src/file_helper.cpp $(COMMANDS)
 
 OFLAGS = -Wall -Wextra
 
