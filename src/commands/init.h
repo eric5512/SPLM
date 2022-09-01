@@ -2,7 +2,7 @@
 #include <string>
 #include <unordered_map>
 
-#define PARTS_FILE "parts.splm"
+#define INIT_FILE "init.splm"
 
 typedef std::unordered_map<std::string, std::unordered_map<std::string, std::string>> Parts;
 
@@ -12,6 +12,7 @@ public:
     void execute() override;
     std::string usage() override;
 private:
-    Parts& InitCommand::parsePartsFile(std::ifstream &);
+    void checkParts(const Parts&);
+    void saveExternals(Parts&);
 };
 
