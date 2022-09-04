@@ -1,7 +1,6 @@
 #pragma once
 
 #include "command.h"
-#include "commands/init.h"
 
 class CommandBuilder {
 public:

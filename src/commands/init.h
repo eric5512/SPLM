@@ -1,10 +1,11 @@
+#pragma once
+
 #include "../command.h"
 #include <string>
 #include <unordered_map>
+#include "../data_types/parts.h"
 
 #define INIT_FILE "init.splm"
-
-typedef std::unordered_map<std::string, std::unordered_map<std::string, std::string>> Parts;
 
 class InitCommand : public Command {
 public:
@@ -13,6 +14,5 @@ public:
     std::string usage() override;
 private:
     void checkParts(const Parts&);
-    void saveExternals(Parts&);
 };
 

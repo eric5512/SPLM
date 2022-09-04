@@ -8,6 +8,7 @@ private:
     std::string name;
     std::string path;
     std::string externPath;
+    std::string group;
     bool external;
 public:
     Part(const std::string& c_name, const std::string& c_path, bool c_external) : name(c_name), path(c_path), external(c_external) {}
@@ -15,6 +16,7 @@ public:
     std::string getName() const { return name; }
     std::string getPath() const { return path; }
     std::string getExternalPath() const { return externPath; }
+    std::string getGroup() const { return group; }
     bool isExternal() const { return external; }
 };
 
@@ -30,5 +32,6 @@ class Parts {
 private:
     std::unordered_set<Part,HashPart> parts;
 public:
-    bool partExists(Part);
+    bool partExists(const Part&) const;
+    std::unordered_set<Part,HashPart> getParts() const;
 };
