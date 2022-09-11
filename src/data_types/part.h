@@ -24,6 +24,7 @@ public:
     int getRevision() const { return revision; }
     int iterate() { return ++iteration; }
     int revise() { return ++revision; }
+    bool operator==(const Part& part) const { return this->name == part.name; }
 };
 
 class HashPart {

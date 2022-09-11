@@ -21,6 +21,7 @@ int main(int argc, char *argv[]) {
     Command* obj_command = CommandBuilder::build_command(command, modifiers);
 
     if (obj_command == NULL) {
+        std::cout << "splm: Invalid command" << std::endl;
         printUsage();
         return 0;
     }

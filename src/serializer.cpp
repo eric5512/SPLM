@@ -19,4 +19,6 @@ std::string Serializer::serialize(const Part& part) {
     aux += part.getGroup() + FIELD_SEPARATOR;
     aux += std::string(part.isExternal() ? "1":"0") + FIELD_SEPARATOR;
     aux += part.getExternalPath();
+
+    return aux;
 }
