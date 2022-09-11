@@ -1,9 +1,9 @@
 #pragma once
 
+#include "../data_types/parts.h"
 #include "../command.h"
 #include <string>
 #include <unordered_map>
-#include "../data_types/parts.h"
 
 #define INIT_FILE "init.splm"
 
@@ -14,5 +14,6 @@ public:
     std::string usage() override;
 private:
     void checkParts(const Parts&);
+    void checkPart(const Part&);
 };
 

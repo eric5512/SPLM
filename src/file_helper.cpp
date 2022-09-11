@@ -1,7 +1,12 @@
 #include "file_helper.h"
 
+#ifdef _WIN32
 #include <direct.h>
+#elif __unix__
+#include <unistd.h>
+#endif
 #include <dirent.h>
+
 
 bool FileHelper::createFolder(const std::string& folder_name) {
     return mkdir(folder_name.c_str());

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "data_types/part.h"
 #include "data_types/parts.h"
 
 #define PART_SEPARATOR "&"

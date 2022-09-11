@@ -19,11 +19,36 @@ void InitCommand::execute() {
 
     std::ifstream file(INIT_FILE);
     Parts parts;
-    ParserHepler::parseInitFile(file, parts);
+    ParserHelper::parseInitFile(file, parts);
     checkParts(parts);
-
 }
 
 std::string InitCommand::usage() {
     return R"raw()raw";
+}
+
+void InitCommand::checkParts(const Parts& parts) {
+    for (const auto& part : parts.getParts()) {
+        checkPart(part);
+    }
+}
+
+void InitCommand::checkPart(const Part& part) {
+    std::runtime_error err = std::runtime_error("Invalid character in the part " + part.getName());
+
+    if (ParserHelper::containsAnyChar(part.getName(), {'@', '&'})) {
+        throw err;
+    }
+
+    if (ParserHelper::containsAnyChar(part.getExternalPath(), {'@', '&'})) {
+        throw err;
+    }
+
+    if (ParserHelper::containsAnyChar(part.getPath(), {'@', '&'})) {
+        throw err;
+    }
+
+    if (ParserHelper::containsAnyChar(part.getGroup(), {'@', '&'})) {
+        throw err;
+    }
 }
