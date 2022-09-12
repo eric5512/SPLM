@@ -17,9 +17,8 @@ void InitCommand::execute() {
         throw std::runtime_error("parts file not found in the current directory");
     }
 
-    std::ifstream file(INIT_FILE);
     Parts parts;
-    ParserHelper::parseInitFile(file, parts);
+    ParserHelper::parseInitFile(INIT_FILE, parts);
     checkParts(parts);
 }
 

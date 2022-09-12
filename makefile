@@ -2,7 +2,7 @@ COMMANDS = src/commands/init.cpp src/commands/add.cpp src/commands/collect.cpp s
 
 INCLUDES = src/help.cpp src/serializer.cpp src/data_types/parts.cpp src/parser_helper.cpp src/command_builder.cpp src/file_helper.cpp $(COMMANDS)
 
-OFLAGS = -Wall -Wextra
+OFLAGS = -Wall -Wextra -fconcepts
 
 all: src/main.cpp
-	g++ -std=c++11 src/main.cpp -o bin/main.exe $(INCLUDES) $(OFLAGS)
+	g++ -std=c++2a src/main.cpp -o bin/main.exe $(INCLUDES) $(OFLAGS)

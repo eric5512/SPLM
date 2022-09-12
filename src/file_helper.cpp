@@ -7,6 +7,9 @@
 #endif
 #include <dirent.h>
 
+#include <sstream>
+#include <fstream>
+
 
 bool FileHelper::createFolder(const std::string& folder_name) {
     return mkdir(folder_name.c_str());
@@ -31,4 +34,25 @@ bool FileHelper::fileExists(const std::string& file_name) {
 
     closedir(dir);
     return false;
+}
+
+void FileHelper::writeFile(const std::string& filename, const std::vector<std::string>& lines) {
+    std::ofstream outfile = std::ofstream(filename);
+
+    for (const auto& line : lines){
+        outfile << line << "\n";
+    }
+
+    outfile.close();
+}
+
+void FileHelper::readFile(const std::string& filename, std::vector<std::string>& lines) {
+    std::ifstream infile = std::ifstream(filename);
+
+    std::string line;
+    while (std::getline(infile, line)) {
+        lines.push_back(line);
+    }
+
+    infile.close();
 }
