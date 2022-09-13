@@ -3,6 +3,8 @@
 #include "data_types/parts.h"
 #include <vector>
 
+#define SERIALIZED_FILE "serialized.splm"
+
 class ParserHelper {
 public:
     static void parseInitFile(const std::string&, Parts&);
@@ -12,6 +14,6 @@ public:
 
 private:
     static std::string filterChars(const std::string&, const std::vector<char>&);
-    static bool inVector(const auto&vec, const auto& elem);
+    static bool inVector(const auto&, const auto&);
 };
 

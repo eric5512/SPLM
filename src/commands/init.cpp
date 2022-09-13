@@ -20,6 +20,7 @@ void InitCommand::execute() {
     Parts parts;
     ParserHelper::parseInitFile(INIT_FILE, parts);
     checkParts(parts);
+    ParserHelper::serializeParts(parts, SERIALIZED_FILE);
 }
 
 std::string InitCommand::usage() {

@@ -1,5 +1,7 @@
 #include "parser_helper.h"
 
+#include <iostream>
+
 #include "serializer.h"
 #include "file_helper.h"
 
@@ -7,7 +9,13 @@ void ParserHelper::parseInitFile(const std::string& filepath, Parts& parts) {
     std::vector<std::string> lines;
     FileHelper::readFile(filepath, lines);
 
+    if (lines.size() <= 1) {
+        throw new std::runtime_error("Empty init file");
+    }
 
+    std::string header = lines[0];
+
+    for (int i = 1; i < lines.size(); i++) return;
 }
 
 bool ParserHelper::containsAnyChar(const std::string& str, const std::vector<char>& vec) {
