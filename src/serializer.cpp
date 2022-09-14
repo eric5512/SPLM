@@ -1,13 +1,13 @@
 #include "serializer.h"
 
-const char* Serializer::serialize(const Parts& parts) {
+std::string Serializer::serialize(const Parts& parts) {
     std::string aux = "";
 
     for (const auto& part : parts.getParts()) {
         aux += serialize(part) + PART_SEPARATOR;
     }
 
-    return aux.c_str();
+    return aux;
 }
 
 

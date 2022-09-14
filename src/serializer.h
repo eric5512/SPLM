@@ -8,7 +8,7 @@
 
 class Serializer {
 public:
-    static const char* serialize(const Parts&);
+    static std::string serialize(const Parts&);
 private:
     static std::string serialize(const Part&);
 };

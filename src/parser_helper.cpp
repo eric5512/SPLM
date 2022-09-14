@@ -27,9 +27,8 @@ bool ParserHelper::containsAnyChar(const std::string& str, const std::vector<cha
 }
 
 void ParserHelper::serializeParts(const Parts& parts, const std::string& filename) {
-    
-
-    Serializer::serialize(parts);
+    std::string ser = Serializer::serialize(parts);
+    FileHelper::writeFile(filename, std::string(ser));
 }
 
 void ParserHelper::unserializeParts(Parts& parts, const std::string& filename) {
