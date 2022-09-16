@@ -32,9 +32,9 @@ void ParserHelper::serializeParts(const Parts& parts, const std::string& filenam
 }
 
 void ParserHelper::unserializeParts(Parts& parts, const std::string& filename) {
-
+    std::string ser = FileHelper::readFile(filename);
+    Serializer::unserialize(ser, parts);
 }
-
 
 std::string ParserHelper::filterChars(const std::string& str, const std::vector<char>& vec) {
     std::string filtered;

@@ -9,6 +9,8 @@
 class Serializer {
 public:
     static std::string serialize(const Parts&);
+    static void unserialize(const std::string&, Parts&);
 private:
     static std::string serialize(const Part&);
+    static Part unserialize(const std::string&);
 };

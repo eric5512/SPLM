@@ -22,3 +22,12 @@ std::string Serializer::serialize(const Part& part) {
 
     return aux;
 }
+
+
+void Serializer::unserialize(const std::string& string, Parts& parts) {
+    
+}
+
+Part Serializer::unserialize(const std::string& string) {
+    
+}
