@@ -15,7 +15,7 @@ void ParserHelper::parseInitFile(const std::string& filepath, Parts& parts) {
 
     std::string header = lines[0];
 
-    for (int i = 1; i < lines.size(); i++) return;
+    for (int i = 1; i < (int) lines.size(); i++) return;
 }
 
 bool ParserHelper::containsAnyChar(const std::string& str, const std::vector<char>& vec) {

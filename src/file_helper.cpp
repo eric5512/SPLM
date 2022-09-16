@@ -3,6 +3,9 @@
 #ifdef _WIN32
 #include <direct.h>
 #include <windows.h>
+#include <string>
+#include <codecvt>
+#include <locale>
 #elif __unix__
 #include <unistd.h>
 #include <dirent.h>
@@ -22,26 +25,25 @@ bool FileHelper::move(const std::string& src, const std::string& dst) {
 
 bool FileHelper::fileExists(const std::string& file_name, const std::string& path) {
     #ifdef _WIN32
-        WIN32_FIND_DATA FindFileData;
-        
-        WCHAR* w_file_name = new WCHAR[file_name.size() * 2 + 2];
-        swprintf( w_file_name, L"%S", file_name.c_str() );
-        WCHAR* w_path = new WCHAR[path.size() * 2 + 2];
-        swprintf( w_path, L"%S", path.c_str() );
-        
-        
-        HANDLE hFind = FindFirstFile(w_path, &FindFileData);
-        if (hFind == INVALID_HANDLE_VALUE) {
-            printf ("FindFirstFile failed (%d)\n", GetLastError());
-            return;
-        } 
-
-        do {
-            if (!(FindFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) && wcscmp(w_file_name, FindFileData.cFileName) == 0)
-                return true;
-        } while (FindNextFile(hFind, &FindFileData) != 0);
-
-        FindClose(hFind);
+        std::string pathAndPattern = path + '/' + file_name;
+        WIN32_FIND_DATA fd;
+        #ifdef UNICODE
+            std::wstring w_pathAndPattern = std::wstring_convert<std::codecvt_utf8<wchar_t>>().from_bytes(pathAndPattern);
+            HANDLE hFind = ::FindFirstFile(w_pathAndPattern.c_str(), &fd);
+        #else
+            HANDLE hFind = ::FindFirstFile(pathAndPattern.c_str(), &fd);
+        #endif
+        if (hFind != INVALID_HANDLE_VALUE) {
+            do {
+                if (!(fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
+                    return true;
+                }
+            } while (::FindNextFile(hFind, &fd));
+            
+            {
+                ::FindClose(hFind);
+            }
+        }
 
         return false;
     #elif __unix__
