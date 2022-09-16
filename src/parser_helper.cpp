@@ -56,3 +56,16 @@ bool ParserHelper::inVector(const auto&vec, const auto& elem) {
 
     return false;
 }
+
+std::vector<std::string> ParserHelper::splitString(const std::string& string, char separator) {
+    std::vector<std::string> ret = std::vector<std::string>();
+
+    int b = 0;
+    for (size_t i = 0; i < string.length(); i++) {
+        if (string[i] == separator) {
+            ret.emplace_back(string.substr(b, i-b));
+        }
+    }
+    
+    return ret;
+}

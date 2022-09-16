@@ -12,5 +12,5 @@ public:
     static void writeFile(const std::string&, const std::string&);
     static void readFile(const std::string&, std::vector<std::string>&);
     static std::string readFile(const std::string&);
+    static std::string composePath(const std::string&, const std::string&);
 };
-

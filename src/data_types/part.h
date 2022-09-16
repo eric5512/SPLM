@@ -13,15 +13,23 @@ private:
     bool external;
 public:
     Part(const std::string& c_name, const std::string& c_path, std::string c_externPath, std::string c_group, bool c_external) : name(c_name), path(c_path), externPath(c_externPath), group(c_group), revision(1), iteration(0), external(c_external) {}
-    Part(const std::string& c_name, const std::string& c_path, std::string c_group) : name(c_name), path(c_path), externPath(NULL), group(c_group), revision(1), iteration(0), external(false) {}
+    Part(const std::string& c_name, const std::string& c_path, std::string c_group) : name(c_name), path(c_path), externPath(""), group(c_group), revision(1), iteration(0), external(false) {}
+    Part() {}
     std::string getName() const { return name; }
     std::string getPath() const { return path; }
     std::string getExternalPath() const { return externPath; }
     std::string getGroup() const { return group; }
-    bool isExternal() const { return external; }
     std::string getVersion() const { return std::to_string(revision) + '.' + std::to_string(iteration); }
     int getIteration() const { return iteration; }
     int getRevision() const { return revision; }
+    std::string setName(const std::string& c_name) {  name = c_name; }
+    std::string setPath(const std::string& c_path) {  path = c_path; }
+    std::string setExternalPath(const std::string& c_externPath) {  externPath = c_externPath; }
+    std::string setGroup(const std::string& c_group) {  group = c_group; }
+    int setIteration(int c_iteration) {  iteration = c_iteration; }
+    int setRevision(int c_revision) {  revision = c_revision; }
+    bool setExternal(bool c_external) { external = c_external; }
+    bool isExternal() const { return external; }
     int iterate() { return ++iteration; }
     int revise() { return ++revision; }
     bool operator==(const Part& part) const { return this->name == part.name; }

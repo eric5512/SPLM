@@ -11,4 +11,5 @@ private:
 public:
     bool partExists(const Part&) const;
     std::unordered_set<Part,HashPart> getParts() const;
+    void addPart(const Part&);
 };

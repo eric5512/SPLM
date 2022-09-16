@@ -25,7 +25,7 @@ bool FileHelper::move(const std::string& src, const std::string& dst) {
 
 bool FileHelper::fileExists(const std::string& file_name, const std::string& path) {
     #ifdef _WIN32
-        std::string pathAndPattern = path + '/' + file_name;
+        std::string pathAndPattern = path + '\\' + file_name;
         WIN32_FIND_DATA fd;
         #ifdef UNICODE
             std::wstring w_pathAndPattern = std::wstring_convert<std::codecvt_utf8<wchar_t>>().from_bytes(pathAndPattern);
@@ -106,4 +106,12 @@ std::string FileHelper::readFile(const std::string& filename) {
 
     infile.close();
 
+}
+
+std::string FileHelper::composePath(const std::string& path, const std::string& file_or_dir) {
+    #ifdef _WIN32
+        return path + '\\' + file_or_dir;
+    #elif __unix__
+        return path + '/' + file_or_dir;
+    #endif
 }

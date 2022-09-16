@@ -11,3 +11,7 @@ bool Parts::partExists(const Part& part) const {
 std::unordered_set<Part,HashPart> Parts::getParts() const {
     return parts;
 }
+
+void Parts::addPart(const Part& part) {
+    parts.emplace(part);
+}
