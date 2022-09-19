@@ -1,18 +1,22 @@
 #pragma once
 
 #include "data_types/parts.h"
+#include "data_types/meta.h"
 #include <vector>
 
 #define SERIALIZED_PARTS_FILE "serialized.splm"
+#define INIT_FILE "init.splm"
 #define METAINF_FILE "meta.splm"
 #define FOLDER_NAME ".splm"
 
 class ParserHelper {
 public:
-    static std::string parseInitFile(const std::string&, Parts&, std::vector<std::string>&);
+    static void parseInitFile(Parts&, Meta&);
+    static void parseMetaFile(Meta&);
+    static void persistMetaFile(const Meta&);
     static bool containsAnyChar(const std::string &, const std::vector<char>&);
-    static void serializeParts(const Parts&, const std::string&);
-    static void unserializeParts(Parts&, const std::string&);
+    static void serializeParts(const Parts&);
+    static void unserializeParts(Parts&);
     static std::vector<std::string> splitString(const std::string&, char);
 
 private:

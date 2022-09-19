@@ -14,8 +14,8 @@ private:
 public:
     Part(const std::string& c_name, const std::string& c_path, std::string c_externPath, std::string c_group, bool c_external) : name(c_name), path(c_path), externPath(c_externPath), group(c_group), revision(1), iteration(0), external(c_external) {}
     Part(const std::string& c_name, const std::string& c_path, std::string c_group) : name(c_name), path(c_path), externPath(""), group(c_group), revision(1), iteration(0), external(false) {}
-    Part(const std::string& c_name) : name(c_name) {}
-    Part() {}
+    Part(const std::string& c_name) : name(c_name), revision(1), iteration(0) {}
+    Part() : revision(1), iteration(0) {}
     std::string getName() const { return name; }
     std::string getPath() const { return path; }
     std::string getExternalPath() const { return externPath; }

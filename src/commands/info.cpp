@@ -3,10 +3,48 @@
 #include "../file_helper.h"
 #include "../parser_helper.h"
 
+#include <iostream>
+
 void InfoCommand::execute() {
-    std::vector<std::string> lines = std::vector<std::string>();
-    FileHelper::readFile(FileHelper::composePath(FOLDER_NAME, METAINF_FILE), lines);
-    printf("%s: v%s.%s\n", lines[0].c_str(), lines[1].c_str(), lines[2].c_str());
+    Meta meta_inf = Meta();
+    Parts parts = Parts();
+    ParserHelper::parseMetaFile(meta_inf);
+    ParserHelper::unserializeParts(parts);
+
+    if (modifiers.size() == 0) {
+        std::cout << meta_inf.getName() << ": v" << meta_inf.getRevision() << "." << meta_inf.getIteration();
+        return;
+    }
+
+    if (modifiers.size() != 2) {
+        throw std::runtime_error("bad argument format");
+    }
+
+    if (modifiers[0] == "group") {
+        if (modifiers[1] != "all") {
+            Group group = meta_inf.getGroup(modifiers[1]);
+            std::cout << group.getName() << ": v" << group.getRevision() << "." << group.getIteration() << '\n';
+        } else {
+            for (const Group& group : meta_inf.getGroups()) {
+                std::cout << group.getName() << ": v" << group.getRevision() << "." << group.getIteration() << '\n';
+            }
+        }
+        return;
+    }
+
+    if (modifiers[0] == "part") {
+        if (modifiers[1] != "all") {
+            Part part = parts.getPartByName(modifiers[1]);
+            std::cout << part.getName() << ": v" << part.getRevision() << "." << part.getIteration() << '\n';
+        } else {
+            for (const Part& part : parts.getParts()) {
+                std::cout << part.getName() << ": v" << part.getRevision() << "." << part.getIteration() << '\n';
+            }
+        }
+        return;
+    }
+
+    throw std::runtime_error("unknown modifier " + modifiers[0]);
 }
 
 std::string InfoCommand::usage() {

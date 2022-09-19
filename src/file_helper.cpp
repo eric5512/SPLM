@@ -84,6 +84,9 @@ void FileHelper::writeFile(const std::string& filename, const std::string& text,
 
 void FileHelper::readFile(const std::string& filename, std::vector<std::string>& lines) {
     std::ifstream infile = std::ifstream(filename);
+    
+    if (infile.fail())
+        throw std::runtime_error("File " + filename + " doesn't exists");
 
     std::string line;
     while (std::getline(infile, line)) {

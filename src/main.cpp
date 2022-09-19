@@ -28,8 +28,8 @@ int main(int argc, char *argv[]) {
 
     try {
         obj_command->execute();
-    } catch (const std::runtime_error* e) {
-        std::cerr << std::string("Error: ") + e->what() << '\n';
+    } catch (const std::runtime_error& e) {
+        std::cerr << std::string("Error: ") + e.what() << '\n';
     }
     
 

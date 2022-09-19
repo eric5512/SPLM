@@ -10,7 +10,7 @@ void IterateCommand::execute() {
     
     Parts parts = Parts();
 
-    ParserHelper::unserializeParts(parts, FileHelper::composePath(FOLDER_NAME, SERIALIZED_PARTS_FILE));
+    ParserHelper::unserializeParts(parts);
 
     for (std::string modifier : modifiers) {
         if (!parts.partExists(modifier)) throw std::runtime_error("Invalid part " + modifier);
@@ -26,7 +26,7 @@ void IterateCommand::execute() {
     }
 
 
-    ParserHelper::serializeParts(parts, FileHelper::composePath(FOLDER_NAME, SERIALIZED_PARTS_FILE));
+    ParserHelper::serializeParts(parts);
 }
 
 std::string IterateCommand::usage() {

@@ -6,3 +6,6 @@ OFLAGS = -Wall -Wextra -fconcepts
 
 all: src/main.cpp
 	g++ -std=c++2a src/main.cpp -o bin/main.exe $(INCLUDES) $(OFLAGS)
+
+debug: src/main.cpp
+	g++ -g -std=c++2a src/main.cpp -o bin/main.exe $(INCLUDES) $(OFLAGS)

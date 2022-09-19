@@ -18,13 +18,11 @@ void InitCommand::execute() {
     }
 
     Parts parts;
-    std::vector<std::string> groups = std::vector<std::string>();
-    std::string header = ParserHelper::parseInitFile(INIT_FILE, parts, groups);
+    Meta meta_info;
+    ParserHelper::parseInitFile(parts, meta_info);
     checkParts(parts);
-    ParserHelper::serializeParts(parts, SERIALIZED_PARTS_FILE);
-    FileHelper::writeFile(FileHelper::composePath(FOLDER_NAME, METAINF_FILE), header + "\n1\n0\n");
-    for (std::string group : groups)
-        FileHelper::writeFile(FileHelper::composePath(FOLDER_NAME, METAINF_FILE), group + "\n1\n0\n", true);
+    ParserHelper::serializeParts(parts);
+    ParserHelper::persistMetaFile(meta_info);
 }
 
 std::string InitCommand::usage() {

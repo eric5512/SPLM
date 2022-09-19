@@ -1,7 +1,7 @@
 #include "parts.h"
 
 bool Parts::partExists(const std::string& name) const {
-    return parts.contains(Part(name));
+    return parts.find(Part(name)) != parts.end();
 }
 
 std::unordered_set<Part,HashPart> Parts::getParts() const {

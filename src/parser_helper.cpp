@@ -5,25 +5,27 @@
 #include "serializer.h"
 #include "file_helper.h"
 
-std::string ParserHelper::parseInitFile(const std::string& filepath, Parts& parts, std::vector<std::string>& groups) {
+void ParserHelper::parseInitFile(Parts& parts, Meta& meta_inf) {
     std::vector<std::string> lines;
     size_t pos;
-    FileHelper::readFile(filepath, lines);
+
+    FileHelper::readFile(INIT_FILE, lines);
 
     if (lines.size() <= 1) {
-        throw std::runtime_error("Empty init file");
+        throw std::runtime_error("empty init file");
     }
 
     std::string header = lines[0].substr(0, lines[0].find(':'));
+    meta_inf.setName(header);
     std::string group = "all";
-    groups.emplace_back(group);
+    meta_inf.addGroup(Group(group));
 
     for (int i = 1; i < (int) lines.size(); i++) {
         std::string line = lines[i];
         line = line.substr(line.find_first_not_of(' '));
         if ((pos = line.find(':')) != std::string::npos) {
             group = line.substr(0, pos);
-            groups.emplace_back(group);
+            meta_inf.addGroup(Group(group));
         } else {
             Part part = Part();
             std::string token;
@@ -58,9 +60,29 @@ std::string ParserHelper::parseInitFile(const std::string& filepath, Parts& part
             parts.addPart(part);
         }
     }
+}
 
-    return header;
+void ParserHelper::parseMetaFile(Meta& meta_inf) {
+    std::vector<std::string> lines;
+    FileHelper::readFile(FileHelper::composePath(FOLDER_NAME, METAINF_FILE), lines);
 
+    if (lines.size() <= 1) {
+        throw std::runtime_error("empty meta file");
+    }
+
+    meta_inf.setName(lines[0]);
+    meta_inf.setRevision(std::stoi(lines[1]));
+    meta_inf.setIteration(std::stoi(lines[2]));
+
+    for (size_t i = 3; i < lines.size() && lines[i] != ""; i += 3) {
+        meta_inf.addGroup(Group(lines[i], std::stoi(lines[i+1]), std::stoi(lines[i+2])));
+    }
+}
+
+void ParserHelper::persistMetaFile(const Meta& meta_inf) {
+    FileHelper::writeFile(FileHelper::composePath(FOLDER_NAME, METAINF_FILE), meta_inf.getName() + '\n' + std::to_string(meta_inf.getRevision()) + '\n' + std::to_string(meta_inf.getIteration()) +'\n');
+    for (const auto& group : meta_inf.getGroups())
+        FileHelper::writeFile(FileHelper::composePath(FOLDER_NAME, METAINF_FILE), group.getName() + '\n' + std::to_string(group.getRevision()) + '\n' + std::to_string(group.getIteration()) +'\n', true);
 }
 
 bool ParserHelper::containsAnyChar(const std::string& str, const std::vector<char>& vec) {
@@ -71,13 +93,13 @@ bool ParserHelper::containsAnyChar(const std::string& str, const std::vector<cha
     return false;
 }
 
-void ParserHelper::serializeParts(const Parts& parts, const std::string& filename) {
+void ParserHelper::serializeParts(const Parts& parts) {
     std::string ser = Serializer::serialize(parts);
-    FileHelper::writeFile(FileHelper::composePath(std::string(FOLDER_NAME), filename), std::string(ser));
+    FileHelper::writeFile(FileHelper::composePath(std::string(FOLDER_NAME), SERIALIZED_PARTS_FILE), std::string(ser));
 }
 
-void ParserHelper::unserializeParts(Parts& parts, const std::string& filename) {
-    std::string ser = FileHelper::readFile(filename);
+void ParserHelper::unserializeParts(Parts& parts) {
+    std::string ser = FileHelper::readFile(FileHelper::composePath(std::string(FOLDER_NAME), SERIALIZED_PARTS_FILE));
     Serializer::unserialize(ser, parts);
 }
 
@@ -109,7 +131,9 @@ std::vector<std::string> ParserHelper::splitString(const std::string& string, ch
     for (size_t i = 0; i < string.length(); i++) {
         if (string[i] == separator) {
             ret.emplace_back(string.substr(b, i-b));
-            b = i;
+            b = i + 1;
+            if (i == string.length() - 1)
+                ret.emplace_back(""); 
         }
     }
     

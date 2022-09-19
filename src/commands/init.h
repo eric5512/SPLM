@@ -5,8 +5,6 @@
 #include <string>
 #include <unordered_map>
 
-#define INIT_FILE "init.splm"
-
 class InitCommand : public Command {
 public:
     InitCommand(const std::vector<std::string>& mod) : Command(mod) {};
