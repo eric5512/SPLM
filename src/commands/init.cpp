@@ -18,9 +18,10 @@ void InitCommand::execute() {
     }
 
     Parts parts;
-    ParserHelper::parseInitFile(INIT_FILE, parts);
+    std::string header = ParserHelper::parseInitFile(INIT_FILE, parts);
     checkParts(parts);
-    ParserHelper::serializeParts(parts, SERIALIZED_FILE);
+    ParserHelper::serializeParts(parts, SERIALIZED_PARTS_FILE);
+    FileHelper::writeFile(FileHelper::composePath(FOLDER_NAME, METAINF_FILE), header + "\n1\n0\n");
 }
 
 std::string InitCommand::usage() {

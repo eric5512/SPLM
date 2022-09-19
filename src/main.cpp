@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
     for (size_t i = 2; i < (size_t) argc; i++){
         modifiers.push_back(argv[i]);
     }
-    
+
     Command* obj_command = CommandBuilder::build_command(command, modifiers);
 
     if (obj_command == NULL) {
@@ -28,8 +28,8 @@ int main(int argc, char *argv[]) {
 
     try {
         obj_command->execute();
-    } catch (const std::exception& e) {
-        std::cerr << e.what() << '\n';
+    } catch (const std::runtime_error* e) {
+        std::cerr << std::string("Error: ") + e->what() << '\n';
     }
     
 

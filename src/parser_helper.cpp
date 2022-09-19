@@ -5,17 +5,60 @@
 #include "serializer.h"
 #include "file_helper.h"
 
-void ParserHelper::parseInitFile(const std::string& filepath, Parts& parts) {
+std::string ParserHelper::parseInitFile(const std::string& filepath, Parts& parts) {
     std::vector<std::string> lines;
+    size_t pos;
     FileHelper::readFile(filepath, lines);
 
     if (lines.size() <= 1) {
-        throw new std::runtime_error("Empty init file");
+        throw std::runtime_error("Empty init file");
     }
 
-    std::string header = lines[0];
+    std::string header = lines[0].substr(0, lines[0].find(':'));
+    std::string group = "all";
 
-    for (int i = 1; i < (int) lines.size(); i++) return;
+    for (int i = 1; i < (int) lines.size(); i++) {
+        std::string line = lines[i];
+        line = line.substr(line.find_first_not_of(' '));
+        if ((pos = line.find(':')) != std::string::npos) {
+            group = line.substr(0, pos);
+        } else {
+            Part part = Part();
+            std::string token;
+
+            part.setGroup(group);
+
+            if ((pos = line.find(';')) != std::string::npos) {
+                token = line.substr(0, pos);
+                part.setName(token);
+                line.erase(0, pos + 1);
+            } else {
+                throw std::runtime_error("Parsing field of part");
+            }
+
+            if ((pos = line.find(';')) != std::string::npos) {
+                token = line.substr(0, pos);
+                part.setPath(token);
+                line.erase(0, pos + 1);
+            } else {
+                throw std::runtime_error("Parsing field of part");
+            }
+            
+            if ((pos = line.find(';')) != std::string::npos) {
+                token = line.substr(0, pos);
+                part.setExternal(true);
+                part.setExternalPath(token);
+                line.erase(0, pos + 1);
+            } else {
+                part.setExternal(false);
+            }
+
+            parts.addPart(part);
+        }
+    }
+
+    return header;
+
 }
 
 bool ParserHelper::containsAnyChar(const std::string& str, const std::vector<char>& vec) {
@@ -28,7 +71,7 @@ bool ParserHelper::containsAnyChar(const std::string& str, const std::vector<cha
 
 void ParserHelper::serializeParts(const Parts& parts, const std::string& filename) {
     std::string ser = Serializer::serialize(parts);
-    FileHelper::writeFile(filename, std::string(ser));
+    FileHelper::writeFile(FileHelper::composePath(std::string(FOLDER_NAME), filename), std::string(ser));
 }
 
 void ParserHelper::unserializeParts(Parts& parts, const std::string& filename) {
@@ -64,6 +107,7 @@ std::vector<std::string> ParserHelper::splitString(const std::string& string, ch
     for (size_t i = 0; i < string.length(); i++) {
         if (string[i] == separator) {
             ret.emplace_back(string.substr(b, i-b));
+            b = i;
         }
     }
     

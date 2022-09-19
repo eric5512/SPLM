@@ -106,6 +106,7 @@ std::string FileHelper::readFile(const std::string& filename) {
 
     infile.close();
 
+    return acc;
 }
 
 std::string FileHelper::composePath(const std::string& path, const std::string& file_or_dir) {

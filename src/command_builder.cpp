@@ -7,6 +7,7 @@
 #include "commands/remove.h"
 #include "commands/revert.h"
 #include "commands/revise.h"
+#include "commands/info.h"
 
 Command* CommandBuilder::build_command(const std::string& command, const std::vector<std::string>& modifiers) {
     if (command == "init") {
@@ -23,6 +24,8 @@ Command* CommandBuilder::build_command(const std::string& command, const std::ve
         return new RevertCommand(modifiers);
     } else if (command == "revise") {
         return new ReviseCommand(modifiers);
+    } else if (command == "info") {
+        return new InfoCommand(modifiers);
     } else {
         return NULL;
     }

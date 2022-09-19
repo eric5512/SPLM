@@ -22,13 +22,13 @@ public:
     std::string getVersion() const { return std::to_string(revision) + '.' + std::to_string(iteration); }
     int getIteration() const { return iteration; }
     int getRevision() const { return revision; }
-    std::string setName(const std::string& c_name) {  name = c_name; }
-    std::string setPath(const std::string& c_path) {  path = c_path; }
-    std::string setExternalPath(const std::string& c_externPath) {  externPath = c_externPath; }
-    std::string setGroup(const std::string& c_group) {  group = c_group; }
-    int setIteration(int c_iteration) {  iteration = c_iteration; }
-    int setRevision(int c_revision) {  revision = c_revision; }
-    bool setExternal(bool c_external) { external = c_external; }
+    void setName(const std::string& c_name) {  name = c_name; }
+    void setPath(const std::string& c_path) {  path = c_path; }
+    void setExternalPath(const std::string& c_externPath) {  externPath = c_externPath; }
+    void setGroup(const std::string& c_group) {  group = c_group; }
+    void setIteration(int c_iteration) {  iteration = c_iteration; }
+    void setRevision(int c_revision) {  revision = c_revision; }
+    void setExternal(bool c_external) { external = c_external; }
     bool isExternal() const { return external; }
     int iterate() { return ++iteration; }
     int revise() { return ++revision; }
