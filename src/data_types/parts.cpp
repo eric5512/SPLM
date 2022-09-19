@@ -1,11 +1,7 @@
 #include "parts.h"
 
-bool Parts::partExists(const Part& part) const {
-    for (const auto &part_iter : parts) {
-        if (part == part_iter) return true;
-    }
-
-    return false;
+bool Parts::partExists(const std::string& name) const {
+    return parts.contains(Part(name));
 }
 
 std::unordered_set<Part,HashPart> Parts::getParts() const {
@@ -14,4 +10,8 @@ std::unordered_set<Part,HashPart> Parts::getParts() const {
 
 void Parts::addPart(const Part& part) {
     parts.emplace(part);
+}
+
+Part Parts::getPartByName(const std::string& name) const {
+    return *parts.find(Part(name));
 }

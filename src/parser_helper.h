@@ -9,7 +9,7 @@
 
 class ParserHelper {
 public:
-    static std::string parseInitFile(const std::string&, Parts&);
+    static std::string parseInitFile(const std::string&, Parts&, std::vector<std::string>&);
     static bool containsAnyChar(const std::string &, const std::vector<char>&);
     static void serializeParts(const Parts&, const std::string&);
     static void unserializeParts(Parts&, const std::string&);

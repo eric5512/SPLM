@@ -5,7 +5,7 @@
 #include "serializer.h"
 #include "file_helper.h"
 
-std::string ParserHelper::parseInitFile(const std::string& filepath, Parts& parts) {
+std::string ParserHelper::parseInitFile(const std::string& filepath, Parts& parts, std::vector<std::string>& groups) {
     std::vector<std::string> lines;
     size_t pos;
     FileHelper::readFile(filepath, lines);
@@ -16,12 +16,14 @@ std::string ParserHelper::parseInitFile(const std::string& filepath, Parts& part
 
     std::string header = lines[0].substr(0, lines[0].find(':'));
     std::string group = "all";
+    groups.emplace_back(group);
 
     for (int i = 1; i < (int) lines.size(); i++) {
         std::string line = lines[i];
         line = line.substr(line.find_first_not_of(' '));
         if ((pos = line.find(':')) != std::string::npos) {
             group = line.substr(0, pos);
+            groups.emplace_back(group);
         } else {
             Part part = Part();
             std::string token;

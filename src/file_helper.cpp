@@ -16,7 +16,7 @@
 
 
 bool FileHelper::createFolder(const std::string& folder_name) {
-    return mkdir(folder_name.c_str());
+    return mkdir(folder_name.c_str()) == 0;
 }
 
 bool FileHelper::move(const std::string& src, const std::string& dst) {
@@ -64,8 +64,8 @@ bool FileHelper::fileExists(const std::string& file_name, const std::string& pat
     #endif
 }
 
-void FileHelper::writeFile(const std::string& filename, const std::vector<std::string>& lines) {
-    std::ofstream outfile = std::ofstream(filename);
+void FileHelper::writeFile(const std::string& filename, const std::vector<std::string>& lines, bool append) {
+    std::ofstream outfile = append ? std::ofstream(filename, std::ios_base::app) : std::ofstream(filename);
 
     for (const auto& line : lines){
         outfile << line << "\n";
@@ -74,8 +74,8 @@ void FileHelper::writeFile(const std::string& filename, const std::vector<std::s
     outfile.close();
 }
 
-void FileHelper::writeFile(const std::string& filename, const std::string& text) {
-    std::ofstream outfile = std::ofstream(filename);
+void FileHelper::writeFile(const std::string& filename, const std::string& text, bool append) {
+    std::ofstream outfile = append ? std::ofstream(filename, std::ios_base::app) : std::ofstream(filename);
 
     outfile << text;
 
