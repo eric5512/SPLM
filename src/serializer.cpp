@@ -2,11 +2,13 @@
 
 #include "parser_helper.h"
 
+#include <stdexcept>
+
 std::string Serializer::serialize(const Parts& parts) {
     std::string aux = "";
 
-    for (const auto& part : parts.getParts()) {
-        aux += serialize(part) + PART_SEPARATOR;
+    for (const auto& pair : parts.getParts()) {
+        aux += serialize(pair.second) + PART_SEPARATOR;
     }
 
     return aux;
@@ -30,7 +32,7 @@ std::string Serializer::serialize(const Part& part) {
 
 void Serializer::unserialize(const std::string& string, Parts& parts) {
     for (const std::string& part : ParserHelper::splitString(string, PART_SEPARATOR)) {
-        parts.addPart(unserialize(part));
+        parts.addPart(part, unserialize(part));
     }
 }
 

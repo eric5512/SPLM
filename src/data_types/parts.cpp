@@ -1,17 +1,17 @@
 #include "parts.h"
 
 bool Parts::partExists(const std::string& name) const {
-    return parts.find(Part(name)) != parts.end();
+    return parts.find(name) != parts.end();
 }
 
-std::unordered_set<Part,HashPart> Parts::getParts() const {
+std::unordered_map<std::string, Part&> Parts::getParts() const {
     return parts;
 }
 
-void Parts::addPart(const Part& part) {
-    parts.emplace(part);
+void Parts::addPart(const std::string& name, Part part) {
+    parts.insert_or_assign(name, part);
 }
 
-Part Parts::getPartByName(const std::string& name) const {
-    return *parts.find(Part(name));
+Part& Parts::getPartByName(const std::string& name) const {
+    return parts.at(name);
 }

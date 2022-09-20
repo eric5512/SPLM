@@ -25,8 +25,8 @@ void InfoCommand::execute() {
             Group group = meta_inf.getGroup(modifiers[1]);
             std::cout << group.getName() << ": v" << group.getRevision() << "." << group.getIteration() << '\n';
         } else {
-            for (const Group& group : meta_inf.getGroups()) {
-                std::cout << group.getName() << ": v" << group.getRevision() << "." << group.getIteration() << '\n';
+            for (const auto& pair : meta_inf.getGroups()) {
+                std::cout << pair.second.getName() << ": v" << pair.second.getRevision() << "." << pair.second.getIteration() << '\n';
             }
         }
         return;
@@ -37,8 +37,8 @@ void InfoCommand::execute() {
             Part part = parts.getPartByName(modifiers[1]);
             std::cout << part.getName() << ": v" << part.getRevision() << "." << part.getIteration() << '\n';
         } else {
-            for (const Part& part : parts.getParts()) {
-                std::cout << part.getName() << ": v" << part.getRevision() << "." << part.getIteration() << '\n';
+            for (const auto& pair : parts.getParts()) {
+                std::cout << pair.second.getName() << ": v" << pair.second.getRevision() << "." << pair.second.getIteration() << '\n';
             }
         }
         return;

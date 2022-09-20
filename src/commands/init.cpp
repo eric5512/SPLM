@@ -30,8 +30,8 @@ std::string InitCommand::usage() {
 }
 
 void InitCommand::checkParts(const Parts& parts) {
-    for (const auto& part : parts.getParts()) {
-        checkPart(part);
+    for (const auto& pair : parts.getParts()) {
+        checkPart(pair.second);
     }
 }
 

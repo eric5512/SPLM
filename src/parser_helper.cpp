@@ -57,7 +57,7 @@ void ParserHelper::parseInitFile(Parts& parts, Meta& meta_inf) {
                 part.setExternal(false);
             }
 
-            parts.addPart(part);
+            parts.addPart(part.getName(), part);
         }
     }
 }
@@ -81,8 +81,8 @@ void ParserHelper::parseMetaFile(Meta& meta_inf) {
 
 void ParserHelper::persistMetaFile(const Meta& meta_inf) {
     FileHelper::writeFile(FileHelper::composePath(FOLDER_NAME, METAINF_FILE), meta_inf.getName() + '\n' + std::to_string(meta_inf.getRevision()) + '\n' + std::to_string(meta_inf.getIteration()) +'\n');
-    for (const auto& group : meta_inf.getGroups())
-        FileHelper::writeFile(FileHelper::composePath(FOLDER_NAME, METAINF_FILE), group.getName() + '\n' + std::to_string(group.getRevision()) + '\n' + std::to_string(group.getIteration()) +'\n', true);
+    for (const auto& pair : meta_inf.getGroups())
+        FileHelper::writeFile(FileHelper::composePath(FOLDER_NAME, METAINF_FILE), pair.second.getName() + '\n' + std::to_string(pair.second.getRevision()) + '\n' + std::to_string(pair.second.getIteration()) +'\n', true);
 }
 
 bool ParserHelper::containsAnyChar(const std::string& str, const std::vector<char>& vec) {

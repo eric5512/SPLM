@@ -13,9 +13,11 @@ public:
     std::string getName() const { return name; }
     int getRevision() const { return revision; }
     int getIteration() const { return iteration; }
-    void getName(std::string c_name) { name = c_name; }
-    void getRevision(int c_revision) { revision = c_revision; }
-    void getIteration(int c_iteration) { iteration = c_iteration; }
+    void setName(std::string c_name) { name = c_name; }
+    void setRevision(int c_revision) { revision = c_revision; }
+    void setIteration(int c_iteration) { iteration = c_iteration; }
+    int iterate() { return ++iteration; }
+    int revise() { return ++revision; }
     bool operator==(const Group& part) const { return this->name == part.name; }
 };
 

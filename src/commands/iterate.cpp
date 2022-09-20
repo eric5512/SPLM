@@ -16,16 +16,24 @@ void IterateCommand::execute() {
         if (!parts.partExists(modifier)) throw std::runtime_error("Invalid part " + modifier);
     }
 
-    std::vector<std::string> groups = std::vector<std::string>();
-    FileHelper::readFile(FileHelper::composePath(FOLDER_NAME, METAINF_FILE), groups);
+    Meta meta_inf = Meta();
+    ParserHelper::parseMetaFile(meta_inf);
 
     for (std::string modifier : modifiers) {
         Part part = parts.getPartByName(modifier);
 
-        part.setIteration(part.getIteration() + 1);
+        part.iterate();
+
+        Group group = meta_inf.getGroup(part.getGroup());
+
+        group.iterate();
+
+        meta_inf.addGroup(group);
+
+        meta_inf.iterate();
     }
 
-
+    ParserHelper::persistMetaFile(meta_inf);
     ParserHelper::serializeParts(parts);
 }
 
