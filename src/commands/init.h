@@ -11,7 +11,8 @@ public:
     void execute() override;
     std::string usage() override;
 private:
-    void checkParts(const Parts&);
+    void checkParts(Parts&);
     void checkPart(const Part&);
+    void createFolderStructures(const Parts&);
 };
 

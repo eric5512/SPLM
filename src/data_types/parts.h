@@ -10,7 +10,7 @@ private:
     std::unordered_map<std::string, Part> parts;
 public:
     bool partExists(const std::string&) const;
-    auto& getParts() const;
+    std::unordered_map<std::string, Part>& getParts();
     Part& getPartByName(const std::string&);
     void addPart(const std::string&, const Part&);
 };

@@ -93,7 +93,7 @@ bool ParserHelper::containsAnyChar(const std::string& str, const std::vector<cha
     return false;
 }
 
-void ParserHelper::serializeParts(const Parts& parts) {
+void ParserHelper::serializeParts(Parts& parts) {
     std::string ser = Serializer::serialize(parts);
     FileHelper::writeFile(FileHelper::composePath(std::string(FOLDER_NAME), SERIALIZED_PARTS_FILE), std::string(ser));
 }

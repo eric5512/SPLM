@@ -23,13 +23,14 @@ void InitCommand::execute() {
     checkParts(parts);
     ParserHelper::serializeParts(parts);
     ParserHelper::persistMetaFile(meta_info);
+    createFolderStructures(parts);
 }
 
 std::string InitCommand::usage() {
     return R"raw()raw";
 }
 
-void InitCommand::checkParts(const Parts& parts) {
+void InitCommand::checkParts(Parts& parts) {
     for (const auto& pair : parts.getParts()) {
         checkPart(pair.second);
     }
@@ -53,4 +54,8 @@ void InitCommand::checkPart(const Part& part) {
     if (ParserHelper::containsAnyChar(part.getGroup(), {'@', '&'})) {
         throw err;
     }
+}
+
+void InitCommand::createFolderStructures(const Parts& parts) {
+    
 }

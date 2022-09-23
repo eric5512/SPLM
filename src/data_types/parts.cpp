@@ -4,7 +4,7 @@ bool Parts::partExists(const std::string& name) const {
     return parts.find(name) != parts.end();
 }
 
-auto& Parts::getParts() const {
+std::unordered_map<std::string, Part>& Parts::getParts() {
     return parts;
 }
 

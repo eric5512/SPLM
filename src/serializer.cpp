@@ -4,10 +4,10 @@
 
 #include <stdexcept>
 
-std::string Serializer::serialize(const Parts& parts) {
+std::string Serializer::serialize(Parts& parts) {
     std::string aux = "";
 
-    for (const auto& pair : parts.getParts()) {
+    for (auto& pair : parts.getParts()) {
         aux += serialize(pair.second) + PART_SEPARATOR;
     }
 
@@ -31,8 +31,9 @@ std::string Serializer::serialize(const Part& part) {
 
 
 void Serializer::unserialize(const std::string& string, Parts& parts) {
-    for (const std::string& part : ParserHelper::splitString(string, PART_SEPARATOR)) {
-        parts.addPart(part, unserialize(part));
+    for (std::string part : ParserHelper::splitString(string, PART_SEPARATOR)) {
+        Part aux = unserialize(part);
+        parts.addPart(aux.getName(), aux);
     }
 }
 

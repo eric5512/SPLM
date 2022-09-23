@@ -20,15 +20,9 @@ void IterateCommand::execute() {
     ParserHelper::parseMetaFile(meta_inf);
 
     for (std::string modifier : modifiers) {
-        Part part = parts.getPartByName(modifier);
+        parts.getPartByName(modifier).iterate();
 
-        part.iterate();
-
-        Group group = meta_inf.getGroup(part.getGroup());
-
-        group.iterate();
-
-        meta_inf.addGroup(group);
+        meta_inf.getGroup(parts.getPartByName(modifier).getGroup()).iterate();
 
         meta_inf.iterate();
     }

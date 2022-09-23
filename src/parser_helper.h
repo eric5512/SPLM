@@ -15,7 +15,7 @@ public:
     static void parseMetaFile(Meta&);
     static void persistMetaFile(const Meta&);
     static bool containsAnyChar(const std::string &, const std::vector<char>&);
-    static void serializeParts(const Parts&);
+    static void serializeParts(Parts&);
     static void unserializeParts(Parts&);
     static std::vector<std::string> splitString(const std::string&, char);
 
