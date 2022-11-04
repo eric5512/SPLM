@@ -8,10 +8,15 @@
 #include "../parser_helper.h"
 #include "../file_helper.h"
 
+#include "../data_types/folder_tree.h"
+
 void InitCommand::execute() {
-    if (!FileHelper::createFolder(".splm")) {
-        throw std::runtime_error("splm could not create the .splm folder");
+    try {
+        FileHelper::createFolder(FileHelper::composePath(".", ".splm"));
+    } catch (const std::runtime_error &error) {
+        throw std::runtime_error("SPLM could not create the .splm folder \"" + std::string(error.what()) + "\"");
     }
+        
 
     if (!FileHelper::fileExists(INIT_FILE)) {
         throw std::runtime_error("parts file not found in the current directory");
@@ -56,6 +61,8 @@ void InitCommand::checkPart(const Part& part) {
     }
 }
 
-void InitCommand::createFolderStructures(const Parts& parts) {
-    
+void InitCommand::createFolderStructures(Parts& parts) {
+    FolderTree tree = FolderTree(parts);
+
+    tree.createFolderRec();
 }

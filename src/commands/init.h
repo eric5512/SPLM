@@ -13,6 +13,6 @@ public:
 private:
     void checkParts(Parts&);
     void checkPart(const Part&);
-    void createFolderStructures(const Parts&);
+    void createFolderStructures(Parts&);
 };
 

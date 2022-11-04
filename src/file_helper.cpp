@@ -1,5 +1,7 @@
 #include "file_helper.h"
 
+#include <system_error>
+
 #ifdef _WIN32
 #include <direct.h>
 #include <windows.h>
@@ -7,6 +9,8 @@
 #include <codecvt>
 #include <locale>
 #elif __unix__
+#include <cerrno>
+#include <cstring>
 #include <unistd.h>
 #include <dirent.h>
 #endif
@@ -15,12 +19,26 @@
 #include <fstream>
 
 
-bool FileHelper::createFolder(const std::string& folder_name) {
-    return mkdir(folder_name.c_str()) == 0;
+void FileHelper::createFolder(const std::string& folder_name) {
+    #ifdef _WIN32
+        if (CreateDirectoryA(folder_name.c_str(), NULL) == 0) {
+            throw std::runtime_error(std::system_category().message(::GetLastError()));
+        }
+    #elif __unix__
+        if (mkdir(folder_name.c_str()) != 0) {
+            throw std::runtime_error(std::strerror(errno));
+        }
+    #endif
 }
 
-bool FileHelper::move(const std::string& src, const std::string& dst) {
-    return rename(src.c_str(), dst.c_str()) == 0;
+void FileHelper::move(const std::string& src, const std::string& dst) {
+    if (rename(src.c_str(), dst.c_str()) != 0) {
+        #ifdef _WIN32
+            throw std::runtime_error(std::system_category().message(::GetLastError()));
+        #elif __unix__
+            throw std::runtime_error(std::strerror(errno));
+        #endif
+    }
 }
 
 bool FileHelper::fileExists(const std::string& file_name, const std::string& path) {
