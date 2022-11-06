@@ -8,6 +8,7 @@
 #define INIT_FILE "init.splm"
 #define METAINF_FILE "meta.splm"
 #define FOLDER_NAME ".splm"
+#define PARTS_FOLDER "parts"
 
 class ParserHelper {
 public:
@@ -17,6 +18,7 @@ public:
     static bool containsAnyChar(const std::string &, const std::vector<char>&);
     static void serializeParts(Parts&);
     static void unserializeParts(Parts&);
+    static void savePartVersion(const Part&);
     static std::vector<std::string> splitString(const std::string&, char);
 
 private:

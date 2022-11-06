@@ -41,6 +41,18 @@ void FileHelper::move(const std::string& src, const std::string& dst) {
     }
 }
 
+void FileHelper::copy(const std::string& src, const std::string& dst) {
+    #ifdef _WIN32
+        if (CopyFile(src.c_str(), dst.c_str(), true) == 0) {
+            throw std::runtime_error(std::system_category().message(::GetLastError()));
+        }
+    #elif __unix__
+        if (copy(src.c_str(), dst.c_str()) != 0) {
+            throw std::runtime_error(std::strerror(errno));
+        }
+    #endif
+}
+
 bool FileHelper::fileExists(const std::string& file_name, const std::string& path) {
     #ifdef _WIN32
         std::string pathAndPattern = path + '\\' + file_name;
@@ -130,10 +142,7 @@ std::string FileHelper::readFile(const std::string& filename) {
     return acc;
 }
 
-std::string FileHelper::composePath(const std::string& path, const std::string& file_or_dir) {
-    #ifdef _WIN32
-        return path + '\\' + file_or_dir;
-    #elif __unix__
-        return path + '/' + file_or_dir;
-    #endif
+template <typename... Args>
+std::string FileHelper::composePath(const std::string& str, Args... args) {
+    return str + SEPARATOR + composePath(args...);
 }

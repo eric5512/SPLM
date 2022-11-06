@@ -20,7 +20,15 @@ void IterateCommand::execute() {
     ParserHelper::parseMetaFile(meta_inf);
 
     for (std::string modifier : modifiers) {
-        parts.getPartByName(modifier).iterate();
+        Part part = parts.getPartByName(modifier);
+
+        try {
+            ParserHelper::savePartVersion(part);
+        } catch (const std::runtime_error& err) {
+            throw std::runtime_error("Could not copy the part \"" + std::string(err.what()) + '"');
+        }
+
+        part.iterate();
 
         meta_inf.getGroup(parts.getPartByName(modifier).getGroup()).iterate();
 

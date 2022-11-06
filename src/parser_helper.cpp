@@ -62,6 +62,10 @@ void ParserHelper::parseInitFile(Parts& parts, Meta& meta_inf) {
     }
 }
 
+void ParserHelper::savePartVersion(const Part& part) {
+    FileHelper::copy(FileHelper::composePath(part.getPath(),part.getName()), FileHelper::composePath(FOLDER_NAME, PARTS_FOLDER, part.getName(), part.getVersion()));
+}
+
 void ParserHelper::parseMetaFile(Meta& meta_inf) {
     std::vector<std::string> lines;
     FileHelper::readFile(FileHelper::composePath(FOLDER_NAME, METAINF_FILE), lines);
