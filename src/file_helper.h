@@ -7,9 +7,9 @@
 class FileHelper {
 public:
     #ifdef _WIN32
-    static const char SEPARATOR = '/';
-    #elif __unix__
     static const char SEPARATOR = '\\';
+    #elif __unix__
+    static const char SEPARATOR = '/';
     #endif
     static void createFolder(const std::string&);
     static void move(const std::string&, const std::string&);
@@ -18,6 +18,7 @@ public:
     static void writeFile(const std::string&, const std::vector<std::string>&, bool append = false);
     static void writeFile(const std::string&, const std::string&, bool append = false);
     static void readFile(const std::string&, std::vector<std::string>&);
+    static void removeFile(const std::string&);
     static std::string readFile(const std::string&);
     template<typename... Args>
     static std::string composePath(const std::string&, Args...);

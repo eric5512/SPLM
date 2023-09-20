@@ -17,7 +17,7 @@ std::string Serializer::serialize(Parts& parts) {
 
 std::string Serializer::serialize(const Part& part) {
     std::string aux = "";
-
+    if (part.verify()) throw std::runtime_error("Invalid character in part");
     aux += part.getName() + FIELD_SEPARATOR;
     aux += part.getPath() + FIELD_SEPARATOR;
     aux += part.getGroup() + FIELD_SEPARATOR;

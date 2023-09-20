@@ -142,6 +142,10 @@ std::string FileHelper::readFile(const std::string& filename) {
     return acc;
 }
 
+void FileHelper::removeFile(const std::string& filename) {
+    
+}
+
 template <typename... Args>
 std::string FileHelper::composePath(const std::string& str, Args... args) {
     return str + SEPARATOR + composePath(args...);

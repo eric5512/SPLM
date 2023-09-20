@@ -42,23 +42,8 @@ void InitCommand::checkParts(Parts& parts) {
 }
 
 void InitCommand::checkPart(const Part& part) {
-    std::runtime_error err = std::runtime_error("Invalid character in the part " + part.getName());
-
-    if (ParserHelper::containsAnyChar(part.getName(), {'@', '&'})) {
-        throw err;
-    }
-
-    if (ParserHelper::containsAnyChar(part.getExternalPath(), {'@', '&'})) {
-        throw err;
-    }
-
-    if (ParserHelper::containsAnyChar(part.getPath(), {'@', '&'})) {
-        throw err;
-    }
-
-    if (ParserHelper::containsAnyChar(part.getGroup(), {'@', '&'})) {
-        throw err;
-    }
+    if (!part.verify()) 
+        throw std::runtime_error("Invalid character in the part " + part.getName());
 }
 
 void InitCommand::createFolderStructures(Parts& parts) {

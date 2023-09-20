@@ -15,3 +15,10 @@ void Parts::addPart(const std::string& name, const Part &part) {
 Part& Parts::getPartByName(const std::string& name) {
     return parts.at(name);
 }
+
+bool Parts::removePart(const std::string& name) {
+    if (!partExists(name)) return false;
+
+    parts.erase(name);
+    return true;
+}

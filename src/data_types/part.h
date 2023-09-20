@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "../constants.h"
 
 class Part {
 private:
@@ -33,6 +34,7 @@ public:
     bool isExternal() const { return external; }
     int iterate() { return ++iteration; }
     int revise() { return ++revision; }
+    bool verify() const { return !(ParserHelper::containsAnyChar(this->name, {FIELD_SEPARATOR, PART_SEPARATOR}) || ParserHelper::containsAnyChar(this->path, {FIELD_SEPARATOR, PART_SEPARATOR}) || ParserHelper::containsAnyChar(this->group, {FIELD_SEPARATOR, PART_SEPARATOR})  || ParserHelper::containsAnyChar(this->externPath, {FIELD_SEPARATOR, PART_SEPARATOR})); }
     bool operator==(const Part& part) const { return this->name == part.name; }
 };
 

@@ -2,9 +2,7 @@
 
 #include "data_types/part.h"
 #include "data_types/parts.h"
-
-#define PART_SEPARATOR '&'
-#define FIELD_SEPARATOR '@'
+#include "../constants.h"
 
 class Serializer {
 public:

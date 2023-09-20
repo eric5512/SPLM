@@ -13,4 +13,5 @@ public:
     std::unordered_map<std::string, Part>& getParts();
     Part& getPartByName(const std::string&);
     void addPart(const std::string&, const Part&);
+    bool removePart(const std::string&);
 };
